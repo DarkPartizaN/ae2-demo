@@ -23,13 +23,13 @@ public class Hero extends NPC {
     public void init() {
         type = NPC_HERO;
         movetype = MOVETYPE_DYNAMIC;
-        phystype = PHYS_PRECISE;
+        phystype = PHYS_FAST;
 
         name = "Hero";
 
         solid = true;
         visible = true;
-        layer = 1;
+        height = 1;
 
         life = 1f;
         speed = 1.5f;

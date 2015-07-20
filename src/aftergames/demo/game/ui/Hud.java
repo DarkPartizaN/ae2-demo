@@ -5,8 +5,9 @@ import aftergames.demo.game.objects.Box;
 import aftergames.demo.game.objects.Tree;
 import aftergames.engine.Runtime;
 import aftergames.engine.Controllable;
+import aftergames.engine.EngineAPI;
 import aftergames.engine.geom.Shape;
-import aftergames.engine.ui.GuiHud;
+import aftergames.engine.ui.UIHud;
 import aftergames.engine.ui.UIImage;
 import aftergames.engine.utils.MathUtils;
 import aftergames.engine.utils.ResourceUtils;
@@ -16,7 +17,7 @@ import aftergames.engine.world.Entity;
  *
  * @author DominaN
  */
-public class Hud extends GuiHud {
+public class Hud extends UIHud {
 
     private Hero hero;
     private float cursor_indent = 5;
@@ -33,7 +34,6 @@ public class Hud extends GuiHud {
 
         explore_popup = new BottomPopup();
         explore_popup.init();
-        explore_popup.setText("Press [".concat(Controllable.getKeyName(Controllable.USE)).concat("] to use"));
 
         clock = new HudClock();
         clock.init();
@@ -45,8 +45,7 @@ public class Hud extends GuiHud {
     }
 
     public void input() {
-        hero = (Hero) Runtime.engine.getWorld().getActor();
-
+        hero = (Hero) EngineAPI.getWorld().getActor();
         hero.rotateObject(MathUtils.angle(Runtime.getWorldMouseY() - hero.getWorldY(), Runtime.getWorldMouseX() - hero.getWorldX()));
 
         if (!Runtime.keyPressed(Controllable.KEY_ANY)) hero.setTask(hero.task_idle);
@@ -70,7 +69,7 @@ public class Hud extends GuiHud {
 
     private void pickCursor() {
         //Dynamic cursor
-        float player_speed = Runtime.engine.getWorld().getActor().current_speed.length() * 10;
+        float player_speed = EngineAPI.getWorld().getActor().current_speed.length() * 10;
 
         if (cursor_indent != player_speed) {
             if (cursor_indent < player_speed && cursor_indent < 25) cursor_indent += 0.55;
@@ -80,13 +79,19 @@ public class Hud extends GuiHud {
         cursor.setIndent((int) cursor_indent);
         cursor.resetCustomImage(); //We need reset custom image every frame!!!
 
+        explore_popup.setText("Press [".concat(Controllable.getKeyName(Controllable.USE)).concat("] to use"));
         explore_popup.hide(); //We need reset popup every frame! (yet, of course)
 
-        for (Entity p : Runtime.engine.getWorld().getVisibleObjects()) {
-            if (Runtime.worldMouseInRect(p.getBBOX()) && Shape.intersects(Runtime.engine.getWorld().getActor().getBBOX(), p.getBBOX())) {
+        for (Entity p : EngineAPI.getWorld().getVisible()) {
+            if (Runtime.worldMouseInRect(p.getBBOX()) && Shape.intersects(EngineAPI.getWorld().getActor().getBBOX(), p.getBBOX())) {
                 if (p instanceof Box) {
                     cursor.setCustomImage(explore_cursor);
+
+                    explore_popup.setText(p.name);
                     explore_popup.show();
+
+                    if (Runtime.keyPressed(Controllable.USE))
+                        EngineAPI.getWorld().removeObject(p);
                 }
                 if (p instanceof Tree) {
                     cursor.setCustomImage(axe_cursor);

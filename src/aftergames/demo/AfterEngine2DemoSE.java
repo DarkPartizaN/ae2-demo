@@ -1,5 +1,9 @@
 package aftergames.demo;
 
+import aftergames.engine.App;
+import aftergames.engine.utils.ResourceUtils;
+import aftergames.engine.utils.StringUtils;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
@@ -7,10 +11,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import aftergames.engine.App;
-import aftergames.engine.utils.ResourceUtils;
-import aftergames.engine.utils.StringUtils;
 
 /**
  *

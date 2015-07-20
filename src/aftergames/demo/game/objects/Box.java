@@ -15,7 +15,7 @@ public class Box extends Entity {
 
         solid = true;
         visible = true;
-        layer = 2;
+        height = 2;
 
         model = new Model(ResourceUtils.load_image("objects/box.png"), 80, 80);
 

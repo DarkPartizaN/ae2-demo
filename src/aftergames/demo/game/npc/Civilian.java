@@ -12,6 +12,12 @@ public class Civilian extends Hero {
 
     //Example of friendly NPC, following by player
     //(but he's so stupid...))
+    public void init() {
+        super.init();
+
+        speed = 1.2f;
+        setCollisionCircle(0, 0, 20, 20);
+    }
 
     public void initAI() {
         //Conditions

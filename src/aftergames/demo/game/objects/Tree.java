@@ -15,7 +15,7 @@ public class Tree extends Entity {
 
         solid = true;
         visible = true;
-        layer = 0; //On top of screen
+        height = 0; //On top of screen
 
         model = new Model(ResourceUtils.load_image("objects/tree1.png"), 210, 210);
 

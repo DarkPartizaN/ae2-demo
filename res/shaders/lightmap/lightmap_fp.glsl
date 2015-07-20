@@ -10,5 +10,5 @@ void main() {
 
     vec3 final = diffuse.rgb * light.rgb;
 
-    gl_FragColor = vec4(final, diffuse.a);
+    gl_FragColor = vec4(final, min(diffuse.a, 1.0));
 }

@@ -4,9 +4,11 @@ import aftergames.demo.game.npc.Hero;
 import aftergames.demo.game.objects.Box;
 import aftergames.demo.game.objects.Tree;
 import aftergames.demo.game.ui.Hud;
+import aftergames.engine.EngineAPI;
 import aftergames.engine.Screen;
 import aftergames.engine.render.Color;
 import aftergames.engine.utils.MathUtils;
+import aftergames.engine.world.Layer;
 import aftergames.engine.world.Light;
 import aftergames.engine.world.World;
 
@@ -23,6 +25,8 @@ public class DemoScreen extends Screen {
     public void init() {
         World world = new World();
         world.createDefaultLocation(50, 50, 64, 64, 4);
+
+        Layer layer_trees = new Layer();
 
         Hero hero = new Hero();
         hero.init();
@@ -45,7 +49,6 @@ public class DemoScreen extends Screen {
             light.setColor(c);
             light.setDistance(MathUtils.random_int(64, 256));
             light.setWorldPosition(MathUtils.random_float(0, world.getWidth()), MathUtils.random_float(0, world.getHeight()));
-
             world.addObject(light);
 
             if (MathUtils.random_chance() > 0.8f) {
@@ -53,6 +56,7 @@ public class DemoScreen extends Screen {
                 box.init();
                 box.rotateObject(MathUtils.random_int(0, 359));
                 box.setWorldPosition(MathUtils.random_float(0, world.getWidth() - box.getWidth()), MathUtils.random_float(0, world.getHeight() - box.getHeight()));
+                box.name = "Box" + (i + 1000);
 
                 world.addObject(box);
             } else {
@@ -61,22 +65,18 @@ public class DemoScreen extends Screen {
                 tree.rotateObject(MathUtils.random_int(0, 359));
                 tree.setWorldPosition(MathUtils.random_float(0, world.getWidth() - tree.getWidth()), MathUtils.random_float(0, world.getHeight() - tree.getHeight()));
 
-                world.addObject(tree);
+                layer_trees.add(tree);
             }
         }
 
-        engine.create(world);
+        world.addLayer(layer_trees);
+
+        EngineAPI.createEngine(world);
 
         Hud hud = new Hud();
         hud.init();
 
-        engine.setHUD(hud);
-        engine.start();
-
-//        MainMenu menu = new MainMenu();
-//        menu.init();
-//        menu.setCallback(engine);
-//        
-//        engine.showGUI(menu);
+        EngineAPI.setHUD(hud);
+        EngineAPI.startEngine();
     }
 }

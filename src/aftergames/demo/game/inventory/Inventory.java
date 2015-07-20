@@ -1,11 +1,10 @@
 package aftergames.demo.game.inventory;
 
-import java.util.LinkedList;
-
 import aftergames.demo.game.inventory.items.Item;
-import aftergames.engine.render.Texture;
 import aftergames.engine.ui.UIImage;
 import aftergames.engine.world.World;
+
+import java.util.LinkedList;
 
 /**
  *

@@ -1,6 +1,5 @@
 package aftergames.demo.game.inventory.items;
 
-import aftergames.engine.render.Texture;
 import aftergames.engine.ui.UIImage;
 
 /**

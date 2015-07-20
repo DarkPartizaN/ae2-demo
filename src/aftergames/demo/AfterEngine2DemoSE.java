@@ -23,7 +23,7 @@ public class AfterEngine2DemoSE extends App {
 
         int width = 800; //Default width
         int height = 640; //Default height
-        boolean fullscreen = true;
+        boolean fullscreen = false;
 
         String launchParams = new String();
 
